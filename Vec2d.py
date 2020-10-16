@@ -1,19 +1,53 @@
 import math
 import numpy as np
 class Vec2d:
-    def __init__(self,x,y):
+    def __init__(self,x:float,y:float):
         self.x=x
         self.y=y
 
     def display(self):
         return {f'{self.x} {self.y}'} 
 
-    def __add__(self,other):
-        return Vec2d(float(self.x)+float(other.x),float(self.y)+float(other.y))
-    def __sub__(self,other):
-        return Vec2d(self.x-other.x,self.y-other.y)
-    def length(self):  
-        return math.sqrt( self.x**2 + self.y**2 )
+
+    def __add__(self, other):
+        if isinstance(other,self.__class__):
+            return Vec2d(self.x + other.x , self.y + other.y)
+        return Vec2d(self.x + other,self.y + other)
+    
+    def __sub__(self, other):
+        if isinstance(other,self.__class__):
+            return Vec2d(self.x - other.x , self.y - other.y)
+        return Vec2d(self.x - other,self.y - other)
+    
+    def __mul__(self, other):
+        if isinstance(other,self.__class__):
+            return Vec2d(self.x * other.x , self.y * other.y)
+        return Vec2d(self.x * other,self.y * other)
+    
+    def __truediv__(self, other):
+        if isinstance(other,self.__class__):
+            return Vec2d(self.x / other.x , self.y / other.y)
+        return Vec2d(self.x / other, self.y / other)
+    
+    def __rmul__(self, other):
+        return self.__mul__(other)
+    
+    def __eq__(self, other):
+        if isinstance(other,self.__class__):
+            return Vec2d(self.x == other.x and  self.y == other.y)
+        return Vec2d(self.x == other, self.y == other)
+    def normalize(vec):
+        vec_length = length(vec)
+        if vec_length < 0.00001:
+            return Vec2d(0, 1)
+        return Vec2d(vec.x / vec_length, vec.y / vec_length)    
+def dot(self,other):
+    return self.x * other.x + self.y * other.y
+
+def angle_between(self,other):
+    return math.acos(dot(self,other))
+def length(self):  
+    return math.sqrt( self.x**2 + self.y**2 )
     def distance(self,other):
         return (other-self).length()
     def  __str__(self):   
@@ -29,3 +63,8 @@ class Vec2d:
 
     def scalevec(self,other):
          return Vec2d(self.x*other.x,self.y*other.y)
+
+a=Vec2d(1,1).normalize()
+b=Vec2d(1,1).normalize()
+
+print(angle_between(a,b))
