@@ -12,11 +12,17 @@ linecolor="red"
 player=Vec2d(300,300)
 FONT = pygame.font.SysFont("comicsans", 50)
 clock = pygame.time.Clock()
+my_spaceship = [Vec2d(-5,-5),  Vec2d(0,5), Vec2d(5,-5)]
+
+my_spaceship_shape = [Vec2d(-5,-5),  Vec2d(0,5), Vec2d(5,-5)]
 class Asteroid:
     def __init__(self,pos,color,vel):
         self.pos=pos
         self.color=color
         self.vel=vel
+    def __iter__(self):
+        ''' Returns the Iterator object '''
+        return Asteroid(self)
     def __repr__(self): 
         return f"XY: {self.pos.x,self.pos.y}"
     
@@ -24,6 +30,8 @@ class Asteroid:
         self.pos+=self.vel
 def draw_game(window):
     screen.fill((255,255,255))
+    result=[(s.x,s.y) for s in my_spaceship]
+    pygame.draw.polygon(window,(255,0,0),result)
     for i in asteroids:
         pygame.draw.circle(window,(0,255,0),(round(i.pos.x),round(i.pos.y)),20) 
     pygame.draw.rect(window,(255,0,0),(player.x,player.y,100,100))
