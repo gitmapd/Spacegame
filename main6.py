@@ -28,13 +28,19 @@ class Asteroid:
     
     def move(self):
         self.pos+=self.vel
-def draw_game(window):
-    screen.fill((255,255,255))
-    result=[(s.x,s.y) for s in my_spaceship]
+def draw_shape(window,shape):
+    result=[(s.x,s.y) for s in shape]
     pygame.draw.polygon(window,(255,0,0),result)
+def draw_asteroids(window,asteroids):
     for i in asteroids:
-        pygame.draw.circle(window,(0,255,0),(round(i.pos.x),round(i.pos.y)),20) 
-    pygame.draw.rect(window,(255,0,0),(player.x,player.y,100,100))
+        pygame.draw.circle(window,(0,255,0),(round(i.pos.x),round(i.pos.y)),20)
+def draw_player(window,player):
+    pygame.draw.rect(window, (255, 0, 0), (player.x, player.y, 100, 100))
+def draw_game(window):
+    screen.fill((255, 255, 255))
+    draw_shape(window,my_spaceship)
+    draw_asteroids(window,asteroids)
+    draw_player(window,player)
     pygame.display.update()
 
 def moveasteroids():
