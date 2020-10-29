@@ -1,7 +1,9 @@
+import numpy as np
 import pygame
 from Vec2d import Vec2d
 import os
 import random
+import Matrix
 screen_width=800
 screen_height=600
 pygame.init()
@@ -12,6 +14,16 @@ linecolor="red"
 player=Vec2d(300,300)
 FONT = pygame.font.SysFont("comicsans", 50)
 clock = pygame.time.Clock()
+my_spaceship = [Vec2d(-5,-5),  Vec2d(0,5), Vec2d(5,-5)] 
+my_spaceship_shape = [Vec2d(20,30),  Vec2d(30,40), Vec2d(40,0)]
+#my_shape = [Vec2d(200,300),Vec2d(400,100)]
+#my_shape=[Vec2d(-50,-50),  Vec2d(0,50), Vec2d(50,-50)]
+my_shape=[Vec2d(-0.3,-20.3),Vec2d(0,20),Vec2d(20,-20)]
+changerotation=Matrix.RotMatrix(np.radians(180))
+print(changerotation)
+result=[]
+for i in my_shape:
+    result.append(Matrix.multiply_matrix_point(changerotation,i))
 class Asteroid:
     def __init__(self,pos,color,vel):
         self.pos=pos
@@ -22,11 +34,15 @@ class Asteroid:
     
     def move(self):
         self.pos+=self.vel
+def draw_spaceship(canvas,shape):
+    for i in result:
+        pygame.draw.line(canvas,(255,0,0),(i.x,i.y),(200,200))
 def draw_game(window):
     screen.fill((255,255,255))
     for i in asteroids:
         pygame.draw.circle(window,(0,255,0),(round(i.pos.x),round(i.pos.y)),20) 
     pygame.draw.rect(window,(255,0,0),(player.x,player.y,100,100))
+    draw_spaceship(screen,my_spaceship_shape)
     pygame.display.update()
 
 def moveasteroids():
