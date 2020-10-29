@@ -54,6 +54,8 @@ class Vec2d:
     
     def scale(self,s):
         return Vec2d(self.x*s,self.y*s)
+    #def norms(self): 
+    #    return self.scale(1.0/self.length())
 
     def scalevec(self,other):
          return Vec2d(self.x*other.x,self.y*other.y)
@@ -61,9 +63,4 @@ class Vec2d:
     def to_polar(self):
         return self.length(), math.degrees(math.atan2(self.y, self.x))
     
-a=Vec2d(1,-2).normalize()
-b=Vec2d(5,4).normalize()
-
-b=a.to_polar()
-print(b[1])
 
