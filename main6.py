@@ -20,10 +20,23 @@ my_spaceship_shape = [Vec2d(20,30),  Vec2d(30,40), Vec2d(40,0)]
 #my_shape=[Vec2d(-50,-50),  Vec2d(0,50), Vec2d(50,-50)]
 my_shape=[Vec2d(-0.3,-20.3),Vec2d(0,20),Vec2d(20,-20)]
 changerotation=Matrix.RotMatrix(np.radians(180))
+print(type(changerotation))
 print(changerotation)
+centre=Vec2d(200,200)
 result=[]
-for i in my_shape:
-    result.append(Matrix.multiply_matrix_point(changerotation,i))
+def draw_anyshape(window,shape_vertices,shape_centre):
+    """use the player pos as a shape offset"""
+    changerotation=Matrix.RotMatrix(np.radians(180))
+    for shape_points in shape_vertices:
+        rotated_point=changerotation.Matrix.multiply_matrix_point(shape_points)
+        transformed_shape=rotated_point + shape_centre
+    #for point in transformed_shape:
+        result.append(transformed_shape)
+    print(result)    
+        #a=list(transf)
+        #print(transf.x,transf.y) 
+        #pygame.draw.lines(window,(255,0,0),(result),(100,200))
+
 class Asteroid:
     def __init__(self,pos,color,vel):
         self.pos=pos
@@ -31,18 +44,15 @@ class Asteroid:
         self.vel=vel
     def __repr__(self): 
         return f"XY: {self.pos.x,self.pos.y}"
-    
     def move(self):
         self.pos+=self.vel
-def draw_spaceship(canvas,shape):
-    for i in result:
-        pygame.draw.line(canvas,(255,0,0),(i.x,i.y),(200,200))
+
 def draw_game(window):
     screen.fill((255,255,255))
     for i in asteroids:
         pygame.draw.circle(window,(0,255,0),(round(i.pos.x),round(i.pos.y)),20) 
     pygame.draw.rect(window,(255,0,0),(player.x,player.y,100,100))
-    draw_spaceship(screen,my_spaceship_shape)
+    draw_anyshape(screen,my_spaceship,player)
     pygame.display.update()
 
 def moveasteroids():
@@ -63,6 +73,7 @@ def moveplayer():
 def update_game(): #calculate next frame positions for all game objects. modifies the game state variables. does not draw anything on the screen"
     moveplayer()
     moveasteroids()
+
 def init_game(): #setup all the game object positions at the start
     global asteroids
     asteroids = [ Asteroid( Vec2d(random.random()*screen_width,random.random()*screen_height), (255,0,0),Vec2d(random.random(),random.random())) for x in range(0,10) ]

@@ -52,8 +52,6 @@ class Vec2d:
     def normalize(self):
         return Vec2d(self.x/self.length(),self.y/self.length())
     
-    def scale(self,s):
-        return Vec2d(self.x*s,self.y*s)
     #def norms(self): 
     #    return self.scale(1.0/self.length())
 
